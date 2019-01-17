@@ -30,11 +30,12 @@ function preload ()
 {
 		// Load necessary spritesheets/tilemaps
     this.load.atlas('bulbasaur', 'spritesheet.png', 'spritesheet.json');
-    this.load.image('tiles', 'Tiles/full-tileset.png');
+    this.load.image('tiles', 'Tiles/full-tileset-extruded.png');
     this.load.tilemapTiledJSON({
         key: 'map',
         url: 'lobby-tilemap.json'
     });
+
 }
 
 function create ()
@@ -71,21 +72,16 @@ function create ()
 			}
   	});
 	});
-	
 
-    var map = this.make.tilemap({key:'map'});
 
-    var tiles = map.addTilesetImage('blackvolution', 'tiles');
+    map = this.make.tilemap({key:'map'});
+
+    tiles = map.addTilesetImage('blackvolution', 'tiles', 16, 16, 1, 2);
     
     //Grass, paths, etc. (below player)
     var backgroundLayer = map.createStaticLayer("Tile Layer 2", tiles, 0,0);
     backgroundLayer.scaleX = 2;
     backgroundLayer.scaleY = 2;
-
-
-    
-    
-    
 
     
     cursors = this.input.keyboard.createCursorKeys();
@@ -127,12 +123,12 @@ function create ()
     collisionLayer.setCollisionByProperty({ collides: true });
   
 		// Top of trees, roofs, etc. (above player)
-    var aboveLayer = map.createStaticLayer("Tile Layer 3", tiles, 0,0);
+    aboveLayer = map.createStaticLayer("Tile Layer 3", tiles, 0,0);
     aboveLayer.scaleX = 2;
     aboveLayer.scaleY = 2;
     
-    this.physics.add.collider(player, collisionLayer);
-
+    playerCollider = this.physics.add.collider(player, collisionLayer);
+		console.log(playerCollider);
 		// SHOW HITBOXES
 		// const debugGraphics = this.add.graphics().setAlpha(0.75);
     // collisionLayer.renderDebug(debugGraphics, {
@@ -148,11 +144,12 @@ function create ()
     
 }
 
-
 function addOtherPlayers(self, playerInfo){
 	const otherPlayer = self.add.sprite(playerInfo.x, playerInfo.y, 'bulbasaur');
   otherPlayer.playerId = playerInfo.playerId;
   self.otherPlayers.add(otherPlayer);
+	collisionLayer.depth = 99999999
+	aboveLayer.depth = 1000000000;
 }
 
 
