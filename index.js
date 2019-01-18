@@ -56,4 +56,12 @@ io.on('connection', function (socket) {
 		//Emit message to all players
 		socket.broadcast.emit('stopPAnim', players[socket.id]);
 	});
+
+	socket.on('new message', function(messageData){
+		socket.broadcast.emit('new message', {message: messageData.message, username: messageData.username});
+	});
+
+	socket.on('new username', function(username){
+		players[socket.id].username = username;
+	});
 });
