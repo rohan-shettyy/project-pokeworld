@@ -1,5 +1,5 @@
-var gameWidth = window.innerWidth/2;
-var gameHeight = window.innerHeight/2;
+var gameWidth = Math.round(window.innerWidth * 0.7);
+var gameHeight = window.innerHeight;
 var config = {
   type: Phaser.AUTO,
     scale: {
@@ -20,9 +20,6 @@ var config = {
         update: update
     }
 };
-
-
-viewportBase = [0,0];
 
 game = new Phaser.Game(config);
 
@@ -74,6 +71,8 @@ function create ()
 	});
 
 
+
+
     map = this.make.tilemap({key:'map'});
 
     tiles = map.addTilesetImage('blackvolution', 'tiles', 16, 16, 1, 2);
@@ -85,7 +84,6 @@ function create ()
 
     
     cursors = this.input.keyboard.createCursorKeys();
-    
 
 		// Initialize local player
 		player = this.physics.add.sprite(300,200, 'bulbasaur');
@@ -128,7 +126,6 @@ function create ()
     aboveLayer.scaleY = 2;
     
     playerCollider = this.physics.add.collider(player, collisionLayer);
-		console.log(playerCollider);
 		// SHOW HITBOXES
 		// const debugGraphics = this.add.graphics().setAlpha(0.75);
     // collisionLayer.renderDebug(debugGraphics, {
@@ -139,9 +136,10 @@ function create ()
     
 		//Initialize camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels*2, map.heightInPixels*2);
-    this.cameras.main.zoom = 0.5;
+    this.cameras.main.zoom = 1;
     this.cameras.main.startFollow(player);
-    
+
+		nowReady(self);
 }
 
 function addOtherPlayers(self, playerInfo){
@@ -213,10 +211,46 @@ function update (time, delta)
 function cyclePlayers(players){
 	Object.keys(players).forEach(function(id){
 		if (players[id].playerId === self.socket.id){
-			console.log("Player initialized with global ID " + players[id].playerId);
+			pickUsername(players);
+			self.socket.emit('new message', )
 		}
 		else{
 			addOtherPlayers(self, players[id]);
 		}
 	});
+}
+
+$('#chatEngine-textbox').click(function(e){
+	self.input.enabled = false;
+	cursors.up.preventDefault = false;
+	cursors.down.preventDefault = false;
+	cursors.left.preventDefault = false;
+	cursors.right.preventDefault = false;
+	cursors.space.preventDefault = false;
+})
+
+$('body').click(function(e){
+	if (e.target.id !== "chatEngine-textbox"){
+		self.input.enabled = true;
+		cursors.up.preventDefault = true;
+		cursors.down.preventDefault = true;
+		cursors.left.preventDefault = true;
+		cursors.right.preventDefault = true;
+		cursors.space.preventDefault = false;
+	}
+})
+
+function pickUsername(players){
+	var natures = ["adamant", "brave", "lonely", "naughty", "bold", "lax", "relaxed", "impish", "timid", "hasty", "jolly", "naive", "mild", "quiet", "rash", "modest", "gentle", "calm", "sassy",  "careful", "hardy", "docile", "serious", "bashful", "quirky"]
+	var names = ["bulbasaur", 'charmander', 'squirtle', 'mareep', 'pichu', 'cleffa', 'gible', 'chatot', 'yanma', 'bouffalant', 'vulpix', 'durant', 'furfrou', 'comfey', 'flabebe']
+
+	username = natures[Math.floor(Math.random() * natures.length)] + '-' + names[Math.floor(Math.random() * names.length)];
+
+	Object.keys(players).forEach(function(id){
+		if (username === players[id].username){
+			pickUsername(players);
+			return
+		}
+	});
+	self.socket.emit('add username', username);
 }

@@ -2,11 +2,22 @@
 <html style='height:100%;'>
 <head>
   <link rel='stylesheet' href='style.css'>
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
 </head>
 <body style='margin:0;padding:0;width:100%;height:100%;background-color:white;'>
+	<div id="chatEngine-container">
+		<ul id="chatEngine-list">
+			<li>
+				<input placeholder="Enter a message..." id="chatEngine-textbox"/>
+			<li>
+		</ul>
+	</div>
+
+	<!--Scripts-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script type='text/javascript' src='phaser.js'></script>
   <script type='text/javascript' src="init.js"></script>
+	<script type='text/javascript' src='chatEngine.js'></script>
 </body>
 </html>

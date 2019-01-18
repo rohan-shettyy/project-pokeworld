@@ -4,7 +4,39 @@ canvas {
     height:100%;
     width:100%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+		top: 0;
+    left: 0;
+}
+
+#chatEngine-container{
+	display:block;
+	margin:0;
+	float:right;
+	right:0;
+	width: 30%;
+	height: 100%;
+	position: absolute;
+	background-color: rgba(255, 0, 0, 0.678);
+}
+
+#chatEngine-textbox{
+	resize:none;
+	height: 5%;
+	min-height: 20px;
+	display:block;
+	position: absolute;
+	bottom:0;
+	opacity: 1;
+}
+
+ul{
+	list-style-type: none;
+	font-family: "Inconsolata";
+	color: white;
+}
+
+li{
+	display: block;
+	bottom: 0;
+	margin-bottom: 3%;
 }
