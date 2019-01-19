@@ -35,9 +35,11 @@ io.on('connection', function (socket) {
     console.log('user disconnected');
 
 		// Remove this player from our players object
-		delete players[socket.id];
+		
 		// Emit a message to all players to remove this player
-		io.emit('disconnect', socket.id);
+		tempPlayer = players[socket.id];
+		io.emit('disconnect', tempPlayer);
+		delete players[socket.id];
   });
 
 	// Update player positions on server
@@ -61,7 +63,7 @@ io.on('connection', function (socket) {
 		socket.broadcast.emit('new message', {message: messageData.message, username: messageData.username});
 	});
 
-	socket.on('new username', function(username){
+	socket.on('add username', function(username){
 		players[socket.id].username = username;
 	});
 });
