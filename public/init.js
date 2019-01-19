@@ -1,3 +1,34 @@
+var worldScene = new Phaser.Class({
+ 
+    Extends: Phaser.Scene,
+ 
+    initialize:
+ 
+    function worldScene ()
+    {
+        Phaser.Scene.call(this, { key: 'worldScene' });
+    },
+    preload: world_preload,
+    create: world_create,
+		update: world_update
+});
+
+var battleScene = new Phaser.Class({
+ 
+    Extends: Phaser.Scene,
+ 
+    initialize:
+ 
+    function battleScene ()
+    {
+        Phaser.Scene.call(this, { key: 'battleScene' });
+    },
+ 
+    preload: battle_preload,
+ 
+    create: battle_create
+});
+
 var gameWidth = Math.round(window.innerWidth * 0.7);
 var gameHeight = window.innerHeight;
 var config = {
@@ -14,16 +45,15 @@ var config = {
         gravity: { y: 0 } // Top down game, so no gravity
       }
     },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
+    scene: [
+			worldScene,
+			battleScene
+		]
 };
 
 game = new Phaser.Game(config);
 
-function preload ()
+function world_preload ()
 {
 		// Load necessary spritesheets/tilemaps
     this.load.atlas('bulbasaur', 'spritesheet.png', 'spritesheet.json');
@@ -35,7 +65,7 @@ function preload ()
 
 }
 
-function create ()
+function world_create ()
 {
 	// Initialize client-side socket
 	self = this;
@@ -48,7 +78,6 @@ function create ()
 	this.socket.on('disconnect', function (playerId) {
     self.otherPlayers.getChildren().forEach(function (otherPlayer) {
       if (playerId.playerId === otherPlayer.playerId) {
-        console.log(playerId);
 				self.socket.emit('new message', {message: 'I just left, see you later!', username: playerId.username});
 				otherPlayer.destroy();
       }
@@ -153,7 +182,7 @@ function addOtherPlayers(self, playerInfo){
 }
 
 
-function update (time, delta)
+function world_update (time, delta)
 {
 	//SPECIAL THANKS TO MIKE HADLEY FOR THE FOLLOWING FEW LINES
 
@@ -258,3 +287,17 @@ function pickUsername(players){
 	self.socket.emit('add username', username);
 	}
 }
+
+
+
+//////////
+//////////
+//////////
+
+
+
+
+//Battle Scene
+function battle_preload(){}
+
+function battle_create(){}
