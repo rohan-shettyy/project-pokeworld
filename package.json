@@ -1,0 +1,27 @@
+{
+  "name": "project-pokeworld",
+  "version": "1.0.0",
+  "description": "A multiplayer Pokemon engine (to be MMO) that runs right in your browser!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyndakwil/project-pokeworld.git"
+  },
+  "keywords": [
+    "game",
+    "multiplayer",
+    "online",
+    "node",
+    "phaser",
+    "pokemon"
+  ],
+  "author": "Cyndakwil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cyndakwil/project-pokeworld/issues"
+  },
+  "homepage": "https://github.com/cyndakwil/project-pokeworld#readme"
+}
