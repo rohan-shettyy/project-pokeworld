@@ -1,6 +1,8 @@
 # Project Pokeworld
 A multiplayer Pokemon engine (to be MMO) that runs right in your browser!
 
+Project Pokeworld uses Phaser and Socket.io to combine an excellent single player game with a multiplayer experience. No download necessary!
+
 ## Usage
 To play the stable version of Project Pokeworld, simply open http://project-pokeworld.rshetty.repl.co in your browser. Phaser and Socket will handle the rest.
 
