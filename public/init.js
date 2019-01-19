@@ -212,7 +212,7 @@ function cyclePlayers(players){
 	Object.keys(players).forEach(function(id){
 		if (players[id].playerId === self.socket.id){
 			pickUsername(players);
-			self.socket.emit('new message', )
+			self.socket.emit('new message', {message: 'I just joined! Please wish me a warm welcome!', username: username})
 		}
 		else{
 			addOtherPlayers(self, players[id]);
