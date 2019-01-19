@@ -47,8 +47,10 @@ function create ()
   });
 	this.socket.on('disconnect', function (playerId) {
     self.otherPlayers.getChildren().forEach(function (otherPlayer) {
-      if (playerId === otherPlayer.playerId) {
-        otherPlayer.destroy();
+      if (playerId.playerId === otherPlayer.playerId) {
+        console.log(playerId);
+				self.socket.emit('new message', {message: 'I just left, see you later!', username: playerId.username});
+				otherPlayer.destroy();
       }
     });
   });
@@ -245,12 +247,14 @@ function pickUsername(players){
 	var names = ["bulbasaur", 'charmander', 'squirtle', 'mareep', 'pichu', 'cleffa', 'gible', 'chatot', 'yanma', 'bouffalant', 'vulpix', 'durant', 'furfrou', 'comfey', 'flabebe']
 
 	username = natures[Math.floor(Math.random() * natures.length)] + '-' + names[Math.floor(Math.random() * names.length)];
-
+	var count=0;
 	Object.keys(players).forEach(function(id){
 		if (username === players[id].username){
 			pickUsername(players);
-			return
+			count++;
 		}
 	});
+	if (count===0){
 	self.socket.emit('add username', username);
+	}
 }
