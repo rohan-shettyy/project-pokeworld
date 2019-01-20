@@ -22,7 +22,7 @@ function createDialogue(message){
 	document.getElementById("chatEngine-textbox").value = '';
 	var newMessage = document.createElement("LI");       // Create a <li> node
 	var textnode = document.createTextNode(message);  // Create a text node
-	newMessage.color = 'green';
+	newMessage.style.color = 'green';
 	newMessage.appendChild(textnode);          
 
 	var list = document.getElementById("chatEngine-list");
@@ -32,7 +32,7 @@ function createDialogue(message){
 function createChoice(message, op1, op2){
 	document.getElementById("chatEngine-textbox").value = '';
 	var newMessage = document.createElement("LI");       // Create a <li> node
-	newMessage.color = 'green';
+	newMessage.style.color = 'green';
 	var textnode = document.createTextNode(message);  // Create a text node
 	var option1 = document.createElement("BUTTON");
 	var option1text = document.createTextNode(op1);
